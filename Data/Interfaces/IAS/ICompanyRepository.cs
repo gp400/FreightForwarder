@@ -13,7 +13,7 @@ namespace Data.Interfaces.IAS
         Task<Company> GetById(int Id);
         void Insert(Company model);
         void Update(Company model);
-        void Delete(int Id);
+        void Delete(Company model);
         void Save();
     }
 }

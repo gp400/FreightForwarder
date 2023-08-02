@@ -25,32 +25,32 @@ namespace Data.Repositories.IAS
 
         public async Task<IEnumerable<Company>> GetAll()
         {
-            return await context.Companies.AsNoTracking().ToListAsync();
+            return await context.Companies.AsNoTracking().Where(c => c.Active).ToListAsync();
         }
 
         public async Task<Company> GetById(int Id)
         {
-            return await context.Companies.FirstOrDefaultAsync(c => c.Id == Id);
+            return await context.Companies.AsNoTracking().FirstOrDefaultAsync(c => c.Id == Id && c.Active);
         }
 
         public async void Insert(Company model)
         {
-            model.CreatedDate = new DateTime();
+            model.CreatedDate = DateTime.Now;
             model.Active = true;
             await context.AddAsync(model);
         }
 
         public void Update(Company model)
         {
-            model.UpdatedDate = new DateTime();
+            model.UpdatedDate = DateTime.Now;
             context.Update(model);
         }
 
-        public async void Delete(int Id)
+        public async void Delete(Company model)
         {
-            var company = await this.GetById(Id);
-            company.Active = false;
-            company.UpdatedDate = new DateTime();
+            model.Active = false;
+            model.UpdatedDate = DateTime.Now;
+            context.Update(model);
         }
 
         public async void Save()
