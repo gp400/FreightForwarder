@@ -50,8 +50,8 @@ namespace WebApi.Controllers
         {
             try
             {
-                var company = await companyService.Insert(companyDto);
-                return Ok(company);
+                var result = await companyService.Insert(companyDto);
+                return StatusCode(result.GetType().GetProperty("code").GetValue(result, null), result.GetType().GetProperty("response").GetValue(result, null));
             } catch (Exception ex)
             {
                 return BadRequest(ex.Message);
@@ -63,8 +63,8 @@ namespace WebApi.Controllers
         {
             try
             {
-                var company = await companyService.Update(companyDto);
-                return Ok(company);
+                var result = await companyService.Update(companyDto);
+                return StatusCode(result.GetType().GetProperty("code").GetValue(result, null), result.GetType().GetProperty("response").GetValue(result, null));
             } catch (Exception ex)
             {
                 return BadRequest(ex.Message);
@@ -72,12 +72,12 @@ namespace WebApi.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             try
             {
-                companyService.Delete(id);
-                return Ok();
+                var result = await companyService.Delete(id);
+                return StatusCode(result.GetType().GetProperty("code").GetValue(result, null), result.GetType().GetProperty("response").GetValue(result, null));
             } catch (Exception ex)
             {
                 return BadRequest(ex.Message);

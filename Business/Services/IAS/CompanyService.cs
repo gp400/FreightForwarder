@@ -35,7 +35,7 @@ namespace Business.Services.IAS
             var errors = validator(model);
 
             if (errors.Any())
-                return errors;
+                return new { code = 409, response = errors };
 
             var company = new Company
             {
@@ -52,18 +52,22 @@ namespace Business.Services.IAS
 
             repository.Save();
 
-            return company;
+            return new { code = 200, response = company };
         }
 
         public async Task<dynamic> Update(CompanyDto model)
         {
+            var company = await this.GetById(model.Id);
+
+            if (company == null)
+                return new { code = 404, response = new List<string> { "The Company was not found" } };
+
             var errors = validator(model);
 
             if (errors.Any())
-                return errors;
+                return new { code = 409, response = errors };
 
-            var company = await this.GetById(model.Id);
-
+            
             company.Id = model.Id;
             company.Name = model.Name;
             company.Rnc = model.Rnc;
@@ -77,16 +81,21 @@ namespace Business.Services.IAS
 
             repository.Save();
 
-            return company;
+            return new { code = 200, response = company };
         }
 
-        public async void Delete(int Id)
+        public async Task<dynamic> Delete(int Id)
         {
             var company = await this.GetById(Id);
+
+            if (company == null)
+                return new { code = 404, response = new List<string> { "The Company was not found" } };
 
             repository.Delete(company);
 
             repository.Save();
+
+            return new { code = 200, response = company };
         }
 
         private List<string> validator(CompanyDto companyDto)
@@ -97,7 +106,7 @@ namespace Business.Services.IAS
             {
                 if (context.Companies.Any(c => c.Rnc.ToLower() == companyDto.Rnc.ToLower() && c.Active && c.Id != companyDto.Id))
                 {
-                    errors.Add("Ya existe una empresa con ese RNC");
+                    errors.Add("There is a company with that RNC");
                 }
             }
 

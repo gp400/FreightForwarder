@@ -12,6 +12,6 @@ namespace Business.Interfaces.IAS
         Task<T> GetById(int Id);
         Task<dynamic> Insert(A model);
         Task<dynamic> Update(A model);
-        void Delete(int Id);
+        Task<dynamic> Delete(int Id);
     }
 }
