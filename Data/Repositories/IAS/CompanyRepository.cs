@@ -46,7 +46,7 @@ namespace Data.Repositories.IAS
             context.Update(model);
         }
 
-        public async void Delete(Company model)
+        public void Delete(Company model)
         {
             model.Active = false;
             model.UpdatedDate = DateTime.Now;
