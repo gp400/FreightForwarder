@@ -77,7 +77,11 @@ public partial class Company
 
     public bool Active { get; set; }
 
+    public virtual Currency BaseCurrencyNavigation { get; set; } = null!;
+
     public virtual ICollection<CompanyUsr100> CompanyUsr100s { get; set; } = new List<CompanyUsr100>();
+
+    public virtual Currency DefaultCurrencyNavigation { get; set; } = null!;
 
     public virtual ICollection<Role> Roles { get; set; } = new List<Role>();
 }
