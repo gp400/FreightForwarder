@@ -39,7 +39,7 @@ namespace Business.Services.IAS
 
             var company = new Company
             {
-                Name = model.Name,
+                BusinessName = model.BusinessName,
                 Rnc = model.Rnc,
                 Email = model.Email,
                 Logo = model.Logo,
@@ -69,7 +69,7 @@ namespace Business.Services.IAS
 
             
             company.Id = model.Id;
-            company.Name = model.Name;
+            company.BusinessName = model.BusinessName;
             company.Rnc = model.Rnc;
             company.Email = model.Email;
             company.Logo = model.Logo;
