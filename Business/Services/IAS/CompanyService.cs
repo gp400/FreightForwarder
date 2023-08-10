@@ -40,11 +40,35 @@ namespace Business.Services.IAS
             var company = new Company
             {
                 BusinessName = model.BusinessName,
+                Tradename = model.Tradename,
+                BaseCurrency = model.BaseCurrency,
+                DefaultCurrency = model.DefaultCurrency,
+                DefaultTaxGroup = model.DefaultTaxGroup,
+                DefaultPriceLevel = model.DefaultPriceLevel,
                 Rnc = model.Rnc,
-                Email = model.Email,
-                Logo = model.Logo,
-                Address = model.Address,
+                TaxRegime = model.TaxRegime,
+                Country = model.Country,
                 Phone = model.Phone,
+                AltPhone = model.AltPhone,
+                Fax = model.Fax,
+                Email = model.Email,
+                Website = model.Website,
+                Facebook = model.Facebook,
+                Twitter = model.Twitter,
+                YouTube = model.YouTube,
+                Instagram = model.Instagram,
+                Address = model.Address,
+                Address2 = model.Address2,
+                City = model.City,
+                State = model.State,
+                PostalCode = model.PostalCode,
+                Logo = model.Logo,
+                Slogan = model.Slogan,
+                InvoicesNotes = model.InvoicesNotes,
+                FirstMonthFiscalYear = model.FirstMonthFiscalYear,
+                DateFormat = model.DateFormat,
+                TimeZone = model.TimeZone,
+                NativePrintFormat = model.NativePrintFormat,
                 CreatedBy = model.UserId
             };
 
@@ -70,11 +94,35 @@ namespace Business.Services.IAS
             
             company.Id = model.Id;
             company.BusinessName = model.BusinessName;
+            company.Tradename = model.Tradename;
+            company.BaseCurrency = model.BaseCurrency;
+            company.DefaultCurrency = model.DefaultCurrency;
+            company.DefaultTaxGroup = model.DefaultTaxGroup;
+            company.DefaultPriceLevel = model.DefaultPriceLevel;
             company.Rnc = model.Rnc;
-            company.Email = model.Email;
-            company.Logo = model.Logo;
-            company.Address = model.Address;
+            company.TaxRegime = model.TaxRegime;
+            company.Country = model.Country;
             company.Phone = model.Phone;
+            company.AltPhone = model.AltPhone;
+            company.Fax = model.Fax;
+            company.Email = model.Email;
+            company.Website = model.Website;
+            company.Facebook = model.Facebook;
+            company.Twitter = model.Twitter;
+            company.YouTube = model.YouTube;
+            company.Instagram = model.Instagram;
+            company.Address = model.Address;
+            company.Address2 = model.Address2;
+            company.City = model.City;
+            company.State = model.State;
+            company.PostalCode = model.PostalCode;
+            company.Logo = model.Logo;
+            company.Slogan = model.Slogan;
+            company.InvoicesNotes = model.InvoicesNotes;
+            company.FirstMonthFiscalYear = model.FirstMonthFiscalYear;
+            company.DateFormat = model.DateFormat;
+            company.TimeZone = model.TimeZone;
+            company.NativePrintFormat = model.NativePrintFormat;
             company.UpdatedBy = model.UserId;
 
             repository.Update(company);
@@ -107,6 +155,10 @@ namespace Business.Services.IAS
                 if (context.Companies.Any(c => c.Rnc.ToLower() == companyDto.Rnc.ToLower() && c.Active && c.Id != companyDto.Id))
                 {
                     errors.Add("There is a company with that RNC");
+                }
+                if (context.Companies.Any(c => c.BusinessName.ToLower() == companyDto.BusinessName.ToLower() && c.Active && c.Id != companyDto.Id))
+                {
+                    errors.Add("There is a company with that Business Name");
                 }
             }
 

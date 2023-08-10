@@ -19,6 +19,8 @@ public partial class IasContext : DbContext
 
     public virtual DbSet<CompanyUsr100> CompanyUsr100s { get; set; }
 
+    public virtual DbSet<Currency> Currencies { get; set; }
+
     public virtual DbSet<Membership> Memberships { get; set; }
 
     public virtual DbSet<Password> Passwords { get; set; }
@@ -68,6 +70,16 @@ public partial class IasContext : DbContext
             entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
             entity.Property(e => e.Website).IsUnicode(false);
             entity.Property(e => e.YouTube).IsUnicode(false);
+
+            entity.HasOne(d => d.BaseCurrencyNavigation).WithMany(p => p.CompanyBaseCurrencyNavigations)
+                .HasForeignKey(d => d.BaseCurrency)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Company__BaseCur__05D8E0BE");
+
+            entity.HasOne(d => d.DefaultCurrencyNavigation).WithMany(p => p.CompanyDefaultCurrencyNavigations)
+                .HasForeignKey(d => d.DefaultCurrency)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Company__Default__06CD04F7");
         });
 
         modelBuilder.Entity<CompanyUsr100>(entity =>
@@ -88,6 +100,18 @@ public partial class IasContext : DbContext
                 .HasForeignKey(d => d.Usr100Id)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__COMPANY_U__USR10__3B75D760");
+        });
+
+        modelBuilder.Entity<Currency>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Currency__3214EC074078423C");
+
+            entity.ToTable("Currency");
+
+            entity.Property(e => e.Code).IsUnicode(false);
+            entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+            entity.Property(e => e.Description).IsUnicode(false);
+            entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
         });
 
         modelBuilder.Entity<Membership>(entity =>
