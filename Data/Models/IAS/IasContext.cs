@@ -19,6 +19,8 @@ public partial class IasContext : DbContext
 
     public virtual DbSet<CompanyUsr100> CompanyUsr100s { get; set; }
 
+    public virtual DbSet<Membership> Memberships { get; set; }
+
     public virtual DbSet<Password> Passwords { get; set; }
 
     public virtual DbSet<Permission> Permissions { get; set; }
@@ -44,13 +46,28 @@ public partial class IasContext : DbContext
             entity.ToTable("Company");
 
             entity.Property(e => e.Address).IsUnicode(false);
+            entity.Property(e => e.Address2).IsUnicode(false);
+            entity.Property(e => e.AltPhone).IsUnicode(false);
+            entity.Property(e => e.BusinessName).IsUnicode(false);
+            entity.Property(e => e.City).IsUnicode(false);
             entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+            entity.Property(e => e.DateFormat).IsUnicode(false);
             entity.Property(e => e.Email).IsUnicode(false);
+            entity.Property(e => e.Facebook).IsUnicode(false);
+            entity.Property(e => e.Fax).IsUnicode(false);
+            entity.Property(e => e.Instagram).IsUnicode(false);
+            entity.Property(e => e.InvoicesNotes).IsUnicode(false);
             entity.Property(e => e.Logo).IsUnicode(false);
-            entity.Property(e => e.Name).IsUnicode(false);
             entity.Property(e => e.Phone).IsUnicode(false);
+            entity.Property(e => e.PostalCode).IsUnicode(false);
             entity.Property(e => e.Rnc).IsUnicode(false);
+            entity.Property(e => e.Slogan).IsUnicode(false);
+            entity.Property(e => e.State).IsUnicode(false);
+            entity.Property(e => e.Tradename).IsUnicode(false);
+            entity.Property(e => e.Twitter).IsUnicode(false);
             entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
+            entity.Property(e => e.Website).IsUnicode(false);
+            entity.Property(e => e.YouTube).IsUnicode(false);
         });
 
         modelBuilder.Entity<CompanyUsr100>(entity =>
@@ -71,6 +88,43 @@ public partial class IasContext : DbContext
                 .HasForeignKey(d => d.Usr100Id)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__COMPANY_U__USR10__3B75D760");
+        });
+
+        modelBuilder.Entity<Membership>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Membersh__3213E83F1AF1A9F6");
+
+            entity.ToTable("Membership");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.ApplicationId).IsUnicode(false);
+            entity.Property(e => e.Comment).IsUnicode(false);
+            entity.Property(e => e.CreateDate).HasColumnType("datetime");
+            entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+            entity.Property(e => e.Email).IsUnicode(false);
+            entity.Property(e => e.EmailResetToken).IsUnicode(false);
+            entity.Property(e => e.EmailResetTokenExpired).IsUnicode(false);
+            entity.Property(e => e.ExpirationDate).HasColumnType("datetime");
+            entity.Property(e => e.FailedPasswordAnswerAttemptWindowStart).HasColumnType("datetime");
+            entity.Property(e => e.FailedPasswordAttemptWindowStart).HasColumnType("datetime");
+            entity.Property(e => e.LastLockoutDate).HasColumnType("datetime");
+            entity.Property(e => e.LastLoginDate).HasColumnType("datetime");
+            entity.Property(e => e.LastPasswordChangedDate).HasColumnType("datetime");
+            entity.Property(e => e.MobilePin)
+                .IsUnicode(false)
+                .HasColumnName("MobilePIN");
+            entity.Property(e => e.Password).IsUnicode(false);
+            entity.Property(e => e.PasswordAnswer).IsUnicode(false);
+            entity.Property(e => e.PasswordQuestion).IsUnicode(false);
+            entity.Property(e => e.PasswordResetToken).IsUnicode(false);
+            entity.Property(e => e.PasswordResetTokenExpired).IsUnicode(false);
+            entity.Property(e => e.PasswordResetTokenLifetime).HasColumnType("datetime");
+            entity.Property(e => e.PasswordSalt).IsUnicode(false);
+            entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
+
+            entity.HasOne(d => d.User).WithMany(p => p.Memberships)
+                .HasForeignKey(d => d.UserId)
+                .HasConstraintName("FK__Membershi__UserI__72C60C4A");
         });
 
         modelBuilder.Entity<Password>(entity =>

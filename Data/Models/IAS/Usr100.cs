@@ -33,6 +33,8 @@ public partial class Usr100
 
     public virtual ICollection<CompanyUsr100> CompanyUsr100s { get; set; } = new List<CompanyUsr100>();
 
+    public virtual ICollection<Membership> Memberships { get; set; } = new List<Membership>();
+
     public virtual ICollection<Password> Passwords { get; set; } = new List<Password>();
 
     public virtual ICollection<Usr100Role> Usr100Roles { get; set; } = new List<Usr100Role>();
