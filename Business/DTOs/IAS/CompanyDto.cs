@@ -14,19 +14,19 @@ namespace Business.DTOs.IAS
 
         public string Tradename { get; set; } = null!;
 
-        public int BaseCurrency { get; set; }
+        public int BaseCurrencyId { get; set; }
 
-        public int DefaultCurrency { get; set; }
+        public int DefaultCurrencyId { get; set; }
 
-        public int? DefaultTaxGroup { get; set; }
+        public int? DefaultTaxGroupId { get; set; }
 
-        public int? DefaultPriceLevel { get; set; }
+        public int? DefaultPriceLevelId { get; set; }
 
         public string Rnc { get; set; } = null!;
 
-        public int? TaxRegime { get; set; }
+        public int? TaxRegimeId { get; set; }
 
-        public int Country { get; set; }
+        public int CountryId { get; set; }
 
         public string Phone { get; set; } = null!;
 
@@ -66,9 +66,9 @@ namespace Business.DTOs.IAS
 
         public string? DateFormat { get; set; }
 
-        public int TimeZone { get; set; }
+        public int TimeZoneId { get; set; }
 
-        public int NativePrintFormat { get; set; }
+        public int NativePrintFormatId { get; set; }
 
         public int UserId { get; set; }
     }
