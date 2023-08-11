@@ -19,9 +19,13 @@ public partial class IasContext : DbContext
 
     public virtual DbSet<CompanyUsr100> CompanyUsr100s { get; set; }
 
+    public virtual DbSet<Country> Countries { get; set; }
+
     public virtual DbSet<Currency> Currencies { get; set; }
 
     public virtual DbSet<Membership> Memberships { get; set; }
+
+    public virtual DbSet<NativePrintFormat> NativePrintFormats { get; set; }
 
     public virtual DbSet<Password> Passwords { get; set; }
 
@@ -30,6 +34,8 @@ public partial class IasContext : DbContext
     public virtual DbSet<Role> Roles { get; set; }
 
     public virtual DbSet<RolePermission> RolePermissions { get; set; }
+
+    public virtual DbSet<TimeZone> TimeZones { get; set; }
 
     public virtual DbSet<Usr100> Usr100s { get; set; }
 
@@ -71,15 +77,30 @@ public partial class IasContext : DbContext
             entity.Property(e => e.Website).IsUnicode(false);
             entity.Property(e => e.YouTube).IsUnicode(false);
 
-            entity.HasOne(d => d.BaseCurrencyNavigation).WithMany(p => p.CompanyBaseCurrencyNavigations)
-                .HasForeignKey(d => d.BaseCurrency)
+            entity.HasOne(d => d.BaseCurrency).WithMany(p => p.CompanyBaseCurrencies)
+                .HasForeignKey(d => d.BaseCurrencyId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__Company__BaseCur__05D8E0BE");
 
-            entity.HasOne(d => d.DefaultCurrencyNavigation).WithMany(p => p.CompanyDefaultCurrencyNavigations)
-                .HasForeignKey(d => d.DefaultCurrency)
+            entity.HasOne(d => d.Country).WithMany(p => p.Companies)
+                .HasForeignKey(d => d.CountryId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Company__Country__09A971A2");
+
+            entity.HasOne(d => d.DefaultCurrency).WithMany(p => p.CompanyDefaultCurrencies)
+                .HasForeignKey(d => d.DefaultCurrencyId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__Company__Default__06CD04F7");
+
+            entity.HasOne(d => d.NativePrintFormat).WithMany(p => p.Companies)
+                .HasForeignKey(d => d.NativePrintFormatId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Company__NativeP__1332DBDC");
+
+            entity.HasOne(d => d.TimeZone).WithMany(p => p.Companies)
+                .HasForeignKey(d => d.TimeZoneId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Company__TimeZon__0D7A0286");
         });
 
         modelBuilder.Entity<CompanyUsr100>(entity =>
@@ -100,6 +121,18 @@ public partial class IasContext : DbContext
                 .HasForeignKey(d => d.Usr100Id)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__COMPANY_U__USR10__3B75D760");
+        });
+
+        modelBuilder.Entity<Country>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Country__3213E83F95AC3ABB");
+
+            entity.ToTable("Country");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+            entity.Property(e => e.Name).IsUnicode(false);
+            entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
         });
 
         modelBuilder.Entity<Currency>(entity =>
@@ -149,6 +182,18 @@ public partial class IasContext : DbContext
             entity.HasOne(d => d.User).WithMany(p => p.Memberships)
                 .HasForeignKey(d => d.UserId)
                 .HasConstraintName("FK__Membershi__UserI__72C60C4A");
+        });
+
+        modelBuilder.Entity<NativePrintFormat>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__NativePr__3214EC07E198626D");
+
+            entity.ToTable("NativePrintFormat");
+
+            entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+            entity.Property(e => e.Name).IsUnicode(false);
+            entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
         });
 
         modelBuilder.Entity<Password>(entity =>
@@ -216,6 +261,22 @@ public partial class IasContext : DbContext
                 .HasForeignKey(d => d.RoleId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__ROL_PERMI__ROLID__22AA2996");
+        });
+
+        modelBuilder.Entity<TimeZone>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__TimeZone__3214EC27995A540A");
+
+            entity.ToTable("TimeZone");
+
+            entity.Property(e => e.Id)
+                .ValueGeneratedNever()
+                .HasColumnName("ID");
+            entity.Property(e => e.Abbreviation).IsUnicode(false);
+            entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+            entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
+            entity.Property(e => e.Utcdifference).HasColumnName("UTCDifference");
+            entity.Property(e => e.ZoneName).IsUnicode(false);
         });
 
         modelBuilder.Entity<Usr100>(entity =>

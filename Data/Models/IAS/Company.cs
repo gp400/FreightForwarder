@@ -11,19 +11,19 @@ public partial class Company
 
     public string Tradename { get; set; } = null!;
 
-    public int BaseCurrency { get; set; }
+    public int BaseCurrencyId { get; set; }
 
-    public int DefaultCurrency { get; set; }
+    public int DefaultCurrencyId { get; set; }
 
-    public int? DefaultTaxGroup { get; set; }
+    public int? DefaultTaxGroupId { get; set; }
 
-    public int? DefaultPriceLevel { get; set; }
+    public int? DefaultPriceLevelId { get; set; }
 
     public string Rnc { get; set; } = null!;
 
-    public int? TaxRegime { get; set; }
+    public int? TaxRegimeId { get; set; }
 
-    public int Country { get; set; }
+    public int CountryId { get; set; }
 
     public string Phone { get; set; } = null!;
 
@@ -63,9 +63,9 @@ public partial class Company
 
     public string? DateFormat { get; set; }
 
-    public int TimeZone { get; set; }
+    public int TimeZoneId { get; set; }
 
-    public int NativePrintFormat { get; set; }
+    public int NativePrintFormatId { get; set; }
 
     public int CreatedBy { get; set; }
 
@@ -77,11 +77,17 @@ public partial class Company
 
     public bool Active { get; set; }
 
-    public virtual Currency BaseCurrencyNavigation { get; set; } = null!;
+    public virtual Currency BaseCurrency { get; set; } = null!;
 
     public virtual ICollection<CompanyUsr100> CompanyUsr100s { get; set; } = new List<CompanyUsr100>();
 
-    public virtual Currency DefaultCurrencyNavigation { get; set; } = null!;
+    public virtual Country Country { get; set; } = null!;
+
+    public virtual Currency DefaultCurrency { get; set; } = null!;
+
+    public virtual NativePrintFormat NativePrintFormat { get; set; } = null!;
 
     public virtual ICollection<Role> Roles { get; set; } = new List<Role>();
+
+    public virtual TimeZone TimeZone { get; set; } = null!;
 }

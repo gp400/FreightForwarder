@@ -21,7 +21,7 @@ public partial class Currency
 
     public bool Active { get; set; }
 
-    public virtual ICollection<Company> CompanyBaseCurrencyNavigations { get; set; } = new List<Company>();
+    public virtual ICollection<Company> CompanyBaseCurrencies { get; set; } = new List<Company>();
 
-    public virtual ICollection<Company> CompanyDefaultCurrencyNavigations { get; set; } = new List<Company>();
+    public virtual ICollection<Company> CompanyDefaultCurrencies { get; set; } = new List<Company>();
 }
