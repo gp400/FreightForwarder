@@ -11,9 +11,9 @@ namespace Data.Interfaces.IAS
     {
         Task<IEnumerable<Company>> GetAll();
         Task<Company> GetById(int Id);
-        void Insert(Company model);
+        Task Insert(Company model);
         void Update(Company model);
         void Delete(Company model);
-        void Save();
+        Task Save();
     }
 }

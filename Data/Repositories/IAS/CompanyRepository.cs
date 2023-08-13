@@ -33,7 +33,7 @@ namespace Data.Repositories.IAS
             return await context.Companies.AsNoTracking().FirstOrDefaultAsync(c => c.Id == Id && c.Active);
         }
 
-        public async void Insert(Company model)
+        public async Task Insert(Company model)
         {
             model.CreatedDate = DateTime.Now;
             model.Active = true;
@@ -53,7 +53,7 @@ namespace Data.Repositories.IAS
             context.Update(model);
         }
 
-        public async void Save()
+        public async Task Save()
         {
             await context.SaveChangesAsync();
         }

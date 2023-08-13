@@ -6,11 +6,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Umbraco.Core.Models.Entities;
 
 namespace Data.Repositories.IAS
 {
-    public class CoreRepository<T> : ICoreRepository<T> where T : EntityBase
+    public class CoreRepository<T> : ICoreRepository<T> where T : class
     {
         private readonly IasContext context;
 
@@ -34,7 +33,7 @@ namespace Data.Repositories.IAS
         {
             return await context.Set<T>().AsNoTracking().FirstOrDefaultAsync(m => (bool)m.GetType().GetProperty("Active").GetValue(m) == true
                                                                             && (int)m.GetType().GetProperty("CompanyId").GetValue(m) == companyId
-                                                                            && m.Id == Id);
+                                                                            && (int)m.GetType().GetProperty("Id").GetValue(m) == Id);
         }
 
         public async void Insert(T model)

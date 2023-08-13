@@ -4,11 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Umbraco.Core.Models.Entities;
 
 namespace Data.Interfaces.IAS
 {
-    public interface ICoreRepository<T> where T : EntityBase
+    public interface ICoreRepository<T> where T : class
     {
         Task<IEnumerable<T>> GetAll(int companyId);
         Task<T> GetById(int companyId, int Id);

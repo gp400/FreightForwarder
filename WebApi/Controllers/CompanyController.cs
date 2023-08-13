@@ -24,7 +24,7 @@ namespace WebApi.Controllers
                 return Ok(companies);
             } catch(Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest( new List<string> { ex.Message });
             }
         }
 
@@ -41,7 +41,7 @@ namespace WebApi.Controllers
                 return Ok(company);
             } catch(Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(new List<string> { ex.Message });
             }
         }
 
@@ -54,7 +54,7 @@ namespace WebApi.Controllers
                 return StatusCode(result.GetType().GetProperty("code").GetValue(result), result.GetType().GetProperty("response").GetValue(result));
             } catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(new List<string> { ex.Message });
             }
         }
 
@@ -67,7 +67,7 @@ namespace WebApi.Controllers
                 return StatusCode(result.GetType().GetProperty("code").GetValue(result), result.GetType().GetProperty("response").GetValue(result));
             } catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(new List<string> { ex.Message });
             }
         }
 
@@ -80,7 +80,7 @@ namespace WebApi.Controllers
                 return StatusCode(result.GetType().GetProperty("code").GetValue(result), result.GetType().GetProperty("response").GetValue(result));
             } catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(new List<string> { ex.Message });
             }
         }
     }

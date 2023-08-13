@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 
 namespace Business.Services.IAS
 {
-    public class CompanyService : ICoreService<Company, CompanyDto>
+    public class CompanyService : ICompanyService<Company, CompanyDto>
     {
 
-        public readonly CompanyRepository repository;
+        private readonly CompanyRepository repository;
 
         public CompanyService()
         {
@@ -41,13 +41,13 @@ namespace Business.Services.IAS
             {
                 BusinessName = model.BusinessName,
                 Tradename = model.Tradename,
-                BaseCurrency = model.BaseCurrency,
-                DefaultCurrency = model.DefaultCurrency,
-                DefaultTaxGroup = model.DefaultTaxGroup,
-                DefaultPriceLevel = model.DefaultPriceLevel,
+                BaseCurrencyId = model.BaseCurrencyId,
+                DefaultCurrencyId = model.DefaultCurrencyId,
+                DefaultTaxGroupId = model.DefaultTaxGroupId,
+                DefaultPriceLevelId = model.DefaultPriceLevelId,
                 Rnc = model.Rnc,
-                TaxRegime = model.TaxRegime,
-                Country = model.Country,
+                TaxRegimeId = model.TaxRegimeId,
+                CountryId = model.CountryId,
                 Phone = model.Phone,
                 AltPhone = model.AltPhone,
                 Fax = model.Fax,
@@ -67,14 +67,14 @@ namespace Business.Services.IAS
                 InvoicesNotes = model.InvoicesNotes,
                 FirstMonthFiscalYear = model.FirstMonthFiscalYear,
                 DateFormat = model.DateFormat,
-                TimeZone = model.TimeZone,
-                NativePrintFormat = model.NativePrintFormat,
+                TimeZoneId = model.TimeZoneId,
+                NativePrintFormatId = model.NativePrintFormatId,
                 CreatedBy = model.UserId
             };
 
-            repository.Insert(company);
+            await repository.Insert(company);
 
-            repository.Save();
+            await repository.Save();
 
             return new { code = 200, response = company };
         }
@@ -91,17 +91,17 @@ namespace Business.Services.IAS
             if (errors.Any())
                 return new { code = 409, response = errors };
 
-            
+
             company.Id = model.Id;
             company.BusinessName = model.BusinessName;
             company.Tradename = model.Tradename;
-            company.BaseCurrency = model.BaseCurrency;
-            company.DefaultCurrency = model.DefaultCurrency;
-            company.DefaultTaxGroup = model.DefaultTaxGroup;
-            company.DefaultPriceLevel = model.DefaultPriceLevel;
+            company.BaseCurrencyId = model.BaseCurrencyId;
+            company.DefaultCurrencyId = model.DefaultCurrencyId;
+            company.DefaultTaxGroupId = model.DefaultTaxGroupId;
+            company.DefaultPriceLevelId = model.DefaultPriceLevelId;
             company.Rnc = model.Rnc;
-            company.TaxRegime = model.TaxRegime;
-            company.Country = model.Country;
+            company.TaxRegimeId = model.TaxRegimeId;
+            company.CountryId = model.CountryId;
             company.Phone = model.Phone;
             company.AltPhone = model.AltPhone;
             company.Fax = model.Fax;
@@ -121,13 +121,13 @@ namespace Business.Services.IAS
             company.InvoicesNotes = model.InvoicesNotes;
             company.FirstMonthFiscalYear = model.FirstMonthFiscalYear;
             company.DateFormat = model.DateFormat;
-            company.TimeZone = model.TimeZone;
-            company.NativePrintFormat = model.NativePrintFormat;
+            company.TimeZoneId = model.TimeZoneId;
+            company.NativePrintFormatId = model.NativePrintFormatId;
             company.UpdatedBy = model.UserId;
 
             repository.Update(company);
 
-            repository.Save();
+            await repository.Save();
 
             return new { code = 200, response = company };
         }
@@ -141,7 +141,7 @@ namespace Business.Services.IAS
 
             repository.Delete(company);
 
-            repository.Save();
+            await repository.Save();
 
             return new { code = 200, response = company };
         }
