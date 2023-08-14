@@ -9,55 +9,62 @@ using System.Threading.Tasks;
 
 namespace Data.Repositories.IAS
 {
-    public class UserRepository
+    public class UserRepository: IUserRepository
     {
-        private readonly IasContext context;
+        private readonly IASContext context;
 
         public UserRepository()
         {
-            context = new IasContext();
+            context = new IASContext();
         }
 
-        public UserRepository(IasContext _context)
+        public UserRepository(IASContext _context)
         {
             context = _context;
         }
 
         public async Task<IEnumerable<Usr100>> GetAll(int companyId)
         {
-            var users = await context.CompanyUsr100s.AsNoTracking().Where(c => c.Usr100.Active 
+            return await context.CompanyUsr100s.AsNoTracking().Where(c => c.Usr100.Active 
                                                                     && c.Company.Active 
                                                                     && c.CompanyId == companyId)
                                                                     .Include(c => c.Usr100)
                                                                     .Select(c => c.Usr100)
                                                                     .ToListAsync();
-
-            return users;
         }
 
-        public Task<Usr100> GetById(int companyId, int Id)
+        public async Task<Usr100> GetById( int Id)
         {
-            throw new NotImplementedException();
+            return await context.Usr100s.AsNoTracking()
+                                        .Include(u => u.CompanyUsr100s.Where(c => c.Active))
+                                        .FirstOrDefaultAsync(u => u.Id == Id && u.Active);
         }
 
         public async Task Insert(Usr100 model)
         {
-            throw new NotImplementedException();
+            model.CreatedDate = DateTime.Now;
+            model.Active = true;
+            await context.AddAsync(model);
         }
 
-        public void Update(Usr100 model)
+        public void Update(Usr100 model, List<int> companies)
         {
-            throw new NotImplementedException();
+            //Termina esta vaina
+            context.RemoveRange(companies);
+            model.UpdatedDate = DateTime.Now;
+            context.Update(model);
         }
 
         public void Delete(Usr100 model)
         {
-            throw new NotImplementedException();
+            model.Active = false;
+            model.UpdatedDate = DateTime.Now;
+            context.Update(model);
         }
 
         public async Task Save()
         {
-            throw new NotImplementedException();
+            await context.SaveChangesAsync();
         }
     }
 }

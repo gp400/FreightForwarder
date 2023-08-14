@@ -11,14 +11,14 @@ namespace Data.Repositories.IAS
 {
     public class CompanyRepository : ICompanyRepository
     {
-        private readonly IasContext context;
+        private readonly IASContext context;
 
         public CompanyRepository()
         {
-            context = new IasContext();
+            context = new IASContext();
         }
 
-        public CompanyRepository(IasContext _context)
+        public CompanyRepository(IASContext _context)
         {
             context = _context;
         }

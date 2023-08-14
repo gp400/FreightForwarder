@@ -91,7 +91,6 @@ namespace Business.Services.IAS
             if (errors.Any())
                 return new { code = 409, response = errors };
 
-
             company.Id = model.Id;
             company.BusinessName = model.BusinessName;
             company.Tradename = model.Tradename;
@@ -150,7 +149,7 @@ namespace Business.Services.IAS
         {
             var errors = new List<string>();
 
-            using (var context = new IasContext())
+            using (var context = new IASContext())
             {
                 if (context.Companies.Any(c => c.Rnc.ToLower() == companyDto.Rnc.ToLower() && c.Active && c.Id != companyDto.Id))
                 {

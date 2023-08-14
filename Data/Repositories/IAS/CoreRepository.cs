@@ -11,14 +11,14 @@ namespace Data.Repositories.IAS
 {
     public class CoreRepository<T> : ICoreRepository<T> where T : class
     {
-        private readonly IasContext context;
+        private readonly IASContext context;
 
         public CoreRepository()
         {
-            context = new IasContext();
+            context = new IASContext();
         }
 
-        public CoreRepository(IasContext _context)
+        public CoreRepository(IASContext _context)
         {
             context = _context;
         }

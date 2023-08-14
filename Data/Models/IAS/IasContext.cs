@@ -4,13 +4,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Data.Models.IAS;
 
-public partial class IasContext : DbContext
+public partial class IASContext : DbContext
 {
-    public IasContext()
+    public IASContext()
     {
     }
 
-    public IasContext(DbContextOptions<IasContext> options)
+    public IASContext(DbContextOptions<IASContext> options)
         : base(options)
     {
     }
@@ -285,9 +285,13 @@ public partial class IasContext : DbContext
 
             entity.ToTable("Usr100");
 
+            entity.HasIndex(e => e.Email, "UQ_Email").IsUnique();
+
             entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+            entity.Property(e => e.Email)
+                .HasMaxLength(30)
+                .IsUnicode(false);
             entity.Property(e => e.LastName).IsUnicode(false);
-            entity.Property(e => e.Mail).IsUnicode(false);
             entity.Property(e => e.MiddleName).IsUnicode(false);
             entity.Property(e => e.Name).IsUnicode(false);
             entity.Property(e => e.Observations).IsUnicode(false);

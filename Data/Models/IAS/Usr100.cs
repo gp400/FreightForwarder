@@ -13,7 +13,7 @@ public partial class Usr100
 
     public string LastName { get; set; } = null!;
 
-    public string Mail { get; set; } = null!;
+    public string Email { get; set; } = null!;
 
     public string? Picture { get; set; }
 

@@ -16,7 +16,7 @@ namespace Business.DTOs.IAS
 
         public string LastName { get; set; } = null!;
 
-        public string Mail { get; set; } = null!;
+        public string Email { get; set; } = null!;
 
         public string? Picture { get; set; }
 
