@@ -47,10 +47,9 @@ namespace Data.Repositories.IAS
             await context.AddAsync(model);
         }
 
-        public void Update(Usr100 model, List<int> companies)
+        public void Update(Usr100 model, List<CompanyUsr100> companies)
         {
-            //Termina esta vaina
-            context.RemoveRange(companies);
+            context.CompanyUsr100s.RemoveRange(companies);
             model.UpdatedDate = DateTime.Now;
             context.Update(model);
         }

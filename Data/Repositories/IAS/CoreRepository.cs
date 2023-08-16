@@ -36,7 +36,7 @@ namespace Data.Repositories.IAS
                                                                             && (int)m.GetType().GetProperty("Id").GetValue(m) == Id);
         }
 
-        public async void Insert(T model)
+        public async Task Insert(T model)
         {
             model.GetType().GetProperty("CreatedDate").SetValue(model, DateTime.Now);
             model.GetType().GetProperty("Active").SetValue(model, true);
@@ -56,7 +56,7 @@ namespace Data.Repositories.IAS
             context.Update(model);
         }
 
-        public async void Save()
+        public async Task Save()
         {
             await context.SaveChangesAsync();
         }

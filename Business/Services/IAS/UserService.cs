@@ -89,7 +89,7 @@ namespace Business.Services.IAS
             user.PasswordExpires = model.PasswordExpires;
             user.UpdatedBy = model.UserId;
 
-            var companies = user.CompanyUsr100s.Select(c => c.Id).ToList();
+            var companies = new List<CompanyUsr100>(user.CompanyUsr100s); //user.CompanyUsr100s.Select(c => c.Id).ToList();
 
             foreach (var company in model.Companies)
             {
@@ -134,7 +134,7 @@ namespace Business.Services.IAS
 
                 if (invalid.Any())
                 {
-                    errors.Add($"There is these companies: {String.Join(", ", invalid.ToArray())}");
+                    errors.Add($"There is an user with this email {userDto.Email} in these companies: {String.Join(", ", invalid.ToArray())}");
                 }
             }
 
